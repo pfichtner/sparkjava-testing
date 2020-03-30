@@ -31,7 +31,7 @@ class SparkServerRuleWithSecurityTest {
     private HostnameVerifier defaultHostnameVerifier;
 
     @BeforeAll
-	void setUp(SparkStarter s) {
+    static void setUp(SparkStarter s) {
 		s.runSpark(https -> {
 			https.ipAddress("127.0.0.1");
 			https.port(9876);

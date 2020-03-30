@@ -9,8 +9,8 @@ See the actual tests for example usage. But if you don't want to do that, here's
 You can let inject you an instance of a SparkRunner. Then your tests run, making HTTP requests to the test server, and finally the server is shut down after tests have run. The injection can be done in several places e.g. in methods annotated with @BeforeEach @BeforeAll or even @Test
 
 ```java
-@BeforeEach
-void setUp(SparkStarter s) {
+@BeforeAll
+static void setUp(SparkStarter s) {
 	s.runSpark(http -> {
 		http.get("/ping", (request, response) -> "pong");
 		http.get("/health", (request, response) -> "healthy");
@@ -37,8 +37,8 @@ Since Spark runs on port 4567 by default that's the port our client test uses. A
 The `SparkServerRule` class has only one constructor that accepts a `ServiceInitializer`, which is a `@FunctionalInterface` so you can pass a lambda expression. The `ServiceInitializer#init` method takes one argument, an instance of Spark's `Service` class, on which you configure the server, add routes, filters, etc.  For example, to start your test server on a different port, you can do this:
 
 ```java
-@BeforeEach
-void setUp(SparkStarter s) {
+@BeforeAll
+static void setUp(SparkStarter s) {
 	s.runSpark(http -> {
     		http.port(9876);
 		http.get("/ping", (request, response) -> "pong");
@@ -50,8 +50,8 @@ void setUp(SparkStarter s) {
 And if you want to change not only the port, but also the IP address and make the server secure, you can do it like this:
 
 ```java
-@BeforeEach
-void setUp(SparkStarter s) {
+@BeforeAll
+static void setUp(SparkStarter s) {
 	s.runSpark(https -> {
             	https.ipAddress("127.0.0.1");
     		https.port(9876);

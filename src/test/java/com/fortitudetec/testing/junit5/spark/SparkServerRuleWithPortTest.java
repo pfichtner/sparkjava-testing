@@ -23,7 +23,7 @@ class SparkServerRuleWithPortTest {
     private Client client;
 
 	@BeforeAll
-	void setUp(SparkStarter s) {
+	static void setUp(SparkStarter s) {
 		s.runSpark(http -> {
 			http.port(6543);
 			http.get("/ping", (request, response) -> "pong");
