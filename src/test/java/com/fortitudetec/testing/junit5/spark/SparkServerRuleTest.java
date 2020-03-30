@@ -10,7 +10,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -21,7 +21,7 @@ class SparkServerRuleTest {
 
     private Client client;
 
-	@BeforeEach
+	@BeforeAll
 	void setUp(SparkStarter s) {
 		s.runSpark(http -> {
 			http.get("/ping", (request, response) -> "pong");

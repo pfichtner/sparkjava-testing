@@ -15,6 +15,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class SparkServerRuleWithSecurityTest {
     private Client client;
     private HostnameVerifier defaultHostnameVerifier;
 
-    @BeforeEach
+    @BeforeAll
 	void setUp(SparkStarter s) {
 		s.runSpark(https -> {
 			https.ipAddress("127.0.0.1");
