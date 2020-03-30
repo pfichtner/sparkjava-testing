@@ -18,11 +18,11 @@ dependencies {
     compile group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.6.1'
 
     runtime group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
-    // testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    runtime group: 'javax.activation', name: 'activation', version: '1.1.1'
+    runtime group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.30.1'
+    runtime group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
     testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.30.1'
-    testCompile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.30.1'
-    testCompile group: 'javax.activation', name: 'activation', version: '1.1.1'
     testCompile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
 }
