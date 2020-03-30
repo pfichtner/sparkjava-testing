@@ -20,7 +20,7 @@ import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStart
 @ExtendWith(JavaSparkRunnerExtension.class)
 class SparkServerRuleWithFilterTest {
 
-    private Client client;
+    private Client client = ClientBuilder.newClient();
 
     private static boolean authenticated;
 
@@ -45,8 +45,6 @@ class SparkServerRuleWithFilterTest {
     @Test
     void testSparkServerRule_PingRequest_WhenAuthenticated() {
         authenticated = true;
-
-        client = ClientBuilder.newClient();
         Response response = client.target(URI.create("http://localhost:56789/secret"))
                 .request()
                 .get();
@@ -57,8 +55,6 @@ class SparkServerRuleWithFilterTest {
     @Test
     void testSparkServerRule_PingRequest_WhenNotAuthenticated() {
         authenticated = false;
-
-        client = ClientBuilder.newClient();
         Response response = client.target(URI.create("http://localhost:56789/secret"))
                 .request()
                 .get();

@@ -20,7 +20,8 @@ import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStart
 @ExtendWith(JavaSparkRunnerExtension.class)
 class SparkServerRuleWithPortTest {
 
-    private Client client;
+    private Client client = ClientBuilder.newBuilder().build();
+;
 
 	@BeforeAll
 	static void setUp(SparkStarter s) {
@@ -38,7 +39,6 @@ class SparkServerRuleWithPortTest {
 
     @Test
     void testSparkServerRule_PingRequest() {
-        client = ClientBuilder.newBuilder().build();
         Response response = client.target(URI.create("http://localhost:6543/ping"))
                 .request()
                 .get();
@@ -48,7 +48,6 @@ class SparkServerRuleWithPortTest {
 
     @Test
     void testSparkServerRule_HealthRequest() {
-        client = ClientBuilder.newBuilder().build();
         Response response = client.target(URI.create("http://localhost:6543/health"))
                 .request()
                 .get();

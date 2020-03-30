@@ -10,7 +10,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -19,10 +19,10 @@ import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStart
 @ExtendWith(JavaSparkRunnerExtension.class)
 class SparkServerRuleTest {
 
-    private Client client;
+    private Client client = ClientBuilder.newClient();
 
-	@BeforeAll
-	static void setUp(SparkStarter s) {
+	@BeforeEach
+	void setUp(SparkStarter s) {
 		s.runSpark(http -> {
 			http.get("/ping", (request, response) -> "pong");
 			http.get("/health", (request, response) -> "healthy");
@@ -36,7 +36,6 @@ class SparkServerRuleTest {
 
     @Test
     void testSparkServerRule_PingRequest() {
-        client = ClientBuilder.newBuilder().build();
         Response response = client.target(URI.create("http://localhost:4567/ping"))
                 .request()
                 .get();
@@ -46,7 +45,6 @@ class SparkServerRuleTest {
 
     @Test
     void testSparkServerRule_HealthRequest() {
-        client = ClientBuilder.newBuilder().build();
         Response response = client.target(URI.create("http://localhost:4567/health"))
                 .request()
                 .get();
