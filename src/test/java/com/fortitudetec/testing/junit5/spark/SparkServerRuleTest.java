@@ -23,7 +23,7 @@ class SparkServerRuleTest {
 
 	@BeforeEach
 	void setUp(SparkStarter s) {
-		s.runSpark(http -> {
+		s.runService(http -> {
 			http.get("/ping", (request, response) -> "pong");
 			http.get("/health", (request, response) -> "healthy");
 		});

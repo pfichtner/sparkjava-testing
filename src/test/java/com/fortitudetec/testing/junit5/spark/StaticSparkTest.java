@@ -1,6 +1,7 @@
 package com.fortitudetec.testing.junit5.spark;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static spark.Spark.get;
 
 import java.net.URI;
 import java.util.Optional;
@@ -17,15 +18,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStarter;
 
 @ExtendWith(JavaSparkRunnerExtension.class)
-class SparkServerClassRuleTest {
+class StaticSparkTest {
 
 	private Client client;
 
 	@BeforeAll
 	static void setUp(SparkStarter s) {
-		s.runService(http -> {
-			http.get("/ping", (request, response) -> "pong");
-			http.get("/health", (request, response) -> "healthy");
+		s.runSpark(() -> {
+			get("/ping", (request, response) -> "pong");
+			get("/health", (request, response) -> "healthy");
 		});
 	}
 

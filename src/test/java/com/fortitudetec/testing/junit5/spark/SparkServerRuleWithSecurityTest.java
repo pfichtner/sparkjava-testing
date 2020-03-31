@@ -32,7 +32,7 @@ class SparkServerRuleWithSecurityTest {
 
     @BeforeAll
     static void setUp(SparkStarter s) {
-		s.runSpark(https -> {
+		s.runService(https -> {
 			https.ipAddress("127.0.0.1");
 			https.port(9876);
 			URL resource = Resources.getResource("sample-keystore.jks");

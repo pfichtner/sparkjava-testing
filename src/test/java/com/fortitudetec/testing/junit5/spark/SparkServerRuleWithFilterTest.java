@@ -26,7 +26,7 @@ class SparkServerRuleWithFilterTest {
 
 	@BeforeAll
 	static void setUp(SparkStarter s) {
-		s.runSpark(http -> {
+		s.runService(http -> {
 			http.port(56789);
 			http.before((request, response) -> {
 				if (!authenticated) {
