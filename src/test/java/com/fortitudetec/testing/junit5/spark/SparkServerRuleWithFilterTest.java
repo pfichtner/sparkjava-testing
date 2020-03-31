@@ -15,9 +15,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStarter;
+import com.fortitudetec.testing.junit5.spark.JavaSparkServiceExtension.JavaSparkServiceStarter;
 
-@ExtendWith(JavaSparkRunnerExtension.class)
+@ExtendWith(JavaSparkServiceExtension.class)
 class SparkServerRuleWithFilterTest {
 
     private Client client = ClientBuilder.newClient();
@@ -25,8 +25,8 @@ class SparkServerRuleWithFilterTest {
     private static boolean authenticated;
 
 	@BeforeAll
-	static void setUp(SparkStarter s) {
-		s.runService(http -> {
+	static void setUp(JavaSparkServiceStarter s) {
+		s.setup(http -> {
 			http.port(56789);
 			http.before((request, response) -> {
 				if (!authenticated) {

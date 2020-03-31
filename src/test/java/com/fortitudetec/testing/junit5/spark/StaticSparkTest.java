@@ -15,16 +15,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStarter;
+import com.fortitudetec.testing.junit5.spark.JavaSparkSparkExtension.JavaSparkSparkStarter;
 
-@ExtendWith(JavaSparkRunnerExtension.class)
+@ExtendWith(JavaSparkSparkExtension.class)
 class StaticSparkTest {
 
 	private Client client;
 
 	@BeforeAll
-	static void setUp(SparkStarter s) {
-		s.runSpark(() -> {
+	static void setUp(JavaSparkSparkStarter s) {
+		s.setup(() -> {
 			get("/ping", (request, response) -> "pong");
 			get("/health", (request, response) -> "healthy");
 		});

@@ -21,18 +21,18 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStarter;
+import com.fortitudetec.testing.junit5.spark.JavaSparkServiceExtension.JavaSparkServiceStarter;
 import com.google.common.io.Resources;
 
-@ExtendWith(JavaSparkRunnerExtension.class)
+@ExtendWith(JavaSparkServiceExtension.class)
 class SparkServerRuleWithSecurityTest {
 
     private Client client;
     private HostnameVerifier defaultHostnameVerifier;
 
     @BeforeAll
-    static void setUp(SparkStarter s) {
-		s.runService(https -> {
+    static void setUp(JavaSparkServiceStarter s) {
+		s.setup(https -> {
 			https.ipAddress("127.0.0.1");
 			https.port(9876);
 			URL resource = Resources.getResource("sample-keystore.jks");

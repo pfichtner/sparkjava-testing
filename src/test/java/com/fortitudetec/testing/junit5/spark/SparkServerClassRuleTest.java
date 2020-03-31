@@ -14,16 +14,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStarter;
+import com.fortitudetec.testing.junit5.spark.JavaSparkServiceExtension.JavaSparkServiceStarter;
 
-@ExtendWith(JavaSparkRunnerExtension.class)
+@ExtendWith(JavaSparkServiceExtension.class)
 class SparkServerClassRuleTest {
 
 	private Client client;
 
 	@BeforeAll
-	static void setUp(SparkStarter s) {
-		s.runService(http -> {
+	static void setUp(JavaSparkServiceStarter s) {
+		s.setup(http -> {
 			http.get("/ping", (request, response) -> "pong");
 			http.get("/health", (request, response) -> "healthy");
 		});
