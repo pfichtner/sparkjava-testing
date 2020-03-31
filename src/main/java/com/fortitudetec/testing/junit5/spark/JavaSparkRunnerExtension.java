@@ -3,7 +3,6 @@ package com.fortitudetec.testing.junit5.spark;
 import static java.lang.reflect.Proxy.newProxyInstance;
 import static org.junit.jupiter.api.extension.ExtensionContext.Namespace.create;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
-import spark.ExceptionHandler;
 import spark.Filter;
 import spark.FilterImpl;
 import spark.HaltException;
