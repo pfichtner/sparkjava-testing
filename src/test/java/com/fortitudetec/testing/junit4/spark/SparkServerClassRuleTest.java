@@ -1,6 +1,9 @@
 package com.fortitudetec.testing.junit4.spark;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -9,8 +12,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class SparkServerClassRuleTest {
 
@@ -22,6 +23,11 @@ public class SparkServerClassRuleTest {
         http.get("/health", (request, response) -> "healthy");
     });
 
+    @Before
+    public void setUp() {
+        client = ClientBuilder.newClient();
+    }
+
     @After
     public void tearDown() {
         Optional.ofNullable(client).ifPresent(Client::close);
@@ -29,7 +35,6 @@ public class SparkServerClassRuleTest {
 
     @Test
     public void testSparkServerRule_PingRequest() {
-        client = ClientBuilder.newBuilder().build();
         Response response = client.target(URI.create("http://localhost:4567/ping"))
                 .request()
                 .get();
@@ -39,7 +44,6 @@ public class SparkServerClassRuleTest {
 
     @Test
     public void testSparkServerRule_HealthRequest() {
-        client = ClientBuilder.newBuilder().build();
         Response response = client.target(URI.create("http://localhost:4567/health"))
                 .request()
                 .get();

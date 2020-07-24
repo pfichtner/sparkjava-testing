@@ -1,11 +1,14 @@
-package com.fortitudetec.testing.junit4.spark;
+package com.fortitudetec.testing.junit5.spark;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import com.fortitudetec.testing.junit5.spark.JavaSparkRunnerExtension.SparkStarter;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -13,37 +16,39 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.Optional;
 
-public class SparkServerRuleWithFilterTest {
+@ExtendWith(JavaSparkRunnerExtension.class)
+class SparkServerExtensionWithFilterTest {
 
     private Client client;
 
     private static boolean authenticated;
 
-    @ClassRule
-    public static final SparkServerRule SPARK_SERVER = new SparkServerRule(http -> {
-        http.port(56789);
-        http.before((request, response) -> {
-            if (!authenticated) {
-                http.halt(401, "Go away!");
-            }
+    @BeforeAll
+    static void setUp(SparkStarter s) {
+        s.runSpark(http -> {
+            http.port(56789);
+            http.before((request, response) -> {
+                if (!authenticated) {
+                    http.halt(401, "Go away!");
+                }
+            });
+            http.get("/secret", (request, response) -> "Don't forget to drink your Ovaltine!");
         });
-        http.get("/secret", (request, response) -> "Don't forget to drink your Ovaltine!");
-    });
+    }
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         client = ClientBuilder.newClient();
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         Optional.ofNullable(client).ifPresent(Client::close);
     }
 
     @Test
-    public void testSparkServerRule_PingRequest_WhenAuthenticated() {
+    void testSparkServerExtension_PingRequest_WhenAuthenticated() {
         authenticated = true;
-
         Response response = client.target(URI.create("http://localhost:56789/secret"))
                 .request()
                 .get();
@@ -52,9 +57,8 @@ public class SparkServerRuleWithFilterTest {
     }
 
     @Test
-    public void testSparkServerRule_PingRequest_WhenNotAuthenticated() {
+    void testSparkServerExtension_PingRequest_WhenNotAuthenticated() {
         authenticated = false;
-
         Response response = client.target(URI.create("http://localhost:56789/secret"))
                 .request()
                 .get();
